@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block title %} Customer Login{% endblock title %}
+{% block content  %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        } 
+        
+        #main {
+            font-family: Arial, sans-serif;
+            {% comment %} background-color: #f7f7f7; {% endcomment %}
+            {% load static %}
+            background-image: url('{% static "images/background.jpg" %}');
+           
+             display: flex;
+            justify-content: center;
+            align-items: center; 
+            height: 100vh;
+        }
+        
+        .login-container {
+            background-color: grey;
+            margin-right:80px;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            
+            width: 100%;
+            max-width: 500px;
+          
+
+            text-align: center;
+        }
+        
+        h2 {
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        label {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        input[type="tel"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+        
+        input[type="tel"]:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+        
+        button.submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        
+        button.submit-btn:hover {
+            background-color: #45a049;
+        }
+        
+        button:disabled {
+            background-color: #aaa;
+            cursor: not-allowed;
+        }
+        #login{
+            color:blue;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id = "main">
+    <div class="login-container">
+        <h2>Login</h2>
+        <form  action="/login" method="post">
+            
+
+            {% csrf_token %}
+
+            {%if error %}
+
+            <div class = "alert alert-danger frm-control-sm role="alert">
+            {{error}}
+            </div>
+            {%endif%}
+
+            <div class="input-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" value="{{value.phone}}" placeholder="Enter your phone number" required pattern="[0-9]{10}">
+            </div>
+            <button type="submit" class="submit-btn">Login</button>
+            <small> do not have account? </small>
+              <a id = "login" href ="/register" >Register</a>
+        </form>
+    </div>
+    </div>
+</body>
+</html>
+
+{% endblock  %}

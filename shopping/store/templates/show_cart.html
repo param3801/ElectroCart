@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Show Cart {% endblock title %}
+{% block content  %}
+
+
+<div class ="container">
+    <div  class="border rounded p4 m-4">
+        <p class="display-4 pl-4 ml-4">My Cart</p>
+        <hr>
+
+        <table class="table">
+            <thead>
+                <tr> 
+                    <th>S.no</th>
+                    <th>Image</th>
+                    <th> Product Name</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th></th>
+                    <th>Action</th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for cart in cart %}
+
+                <tr>
+                    <td> {{forloop.counter}} </td> 
+                    <td> <image style="height:80px;" class="rounded-circle" src=" {{cart.product.image.url}} " alt=""></td>
+                    <td>{{cart.product.name}}</td>
+                    <td>{{cart.quantity}}</td>
+                    <td>Rs. {{cart.product.price}}</td>
+                    <td> <input type="button"  pid="{{cart.product.id}}" class="minus-cart btn" value="-"> </td>
+                    {% comment %} <td> <spam id="quantity"> {{cart.quantity}} </spam> </td> {% endcomment %}
+                   <td> <input type="number" id="quantity"  value="{{cart.quantity}}" min="1"></td>
+
+                    <td> <input type="button"  pid="{{cart.product.id}}" class="plus-cart btn" value="+"> </td>
+                    <td> <input type="button" pid="{{cart.product.id}}" class=" btn btn-danger btn-sm remove-cart" value="Remove"> </td>
+                </tr>
+
+            </tbody>
+            {% endfor %}
+        </table>
+        <hr>
+        <div class="m-5 p-5">
+            <a href="#" class="btn btn-outline-info border rounded col-lg-3 float-left mt-3" data-toggle="modal" data-target="#exampleModal" > Checkout</a>
+
+        </div>
+
+    </div>
+</div>
+
+<!--check out-->
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">close</button>
+        </div>
+        <div class="modal-body">  
+          <form action="/checkout" method="POST">
+            {% csrf_token %}
+
+            <div class="form-group mt-3">
+                <label>Name</label>
+                <input required type="text" name="name" id="name" class="form-control" placeholder="Enter your name"  >
+
+            </div>
+            <div class="form-group mt-3">
+                <label>Address</label>
+                <input required type="text" name="address" id="address" class="form-control" placeholder="Enter your address"  >
+
+            </div>
+            <div class="form-group mt-3">
+                <label>Mobile</label>
+                <input required type="text" name="mobile" id="mobile" class="form-control" placeholder="Enter your mobile"  >
+
+            </div>
+          <input type="submit" class="btn btn-outline-info border rounded col-lg-5 float-left " value="Make Payment">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+{% comment %} <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> {% endcomment %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<script>
+    $('.plus-cart').click (function(){
+        var id = $(this).attr("pid").toString();
+        console.log(id)
+        $.ajax()({
+            type : "GET",
+            url : "/plus_cart",
+            data : {
+                prod_id :id
+            },
+            success:function(data){
+                console.log(data)
+            }
+        })
+    });
+
+    $(".minus-cart").click (function(){
+        var id = $(this).attr("pid").toString();
+        console.log(id)
+        $.ajax({
+            type : "GET",
+            url : "/minus_cart",
+            data : {
+                prod_id :id
+            },
+            success:function(data){
+                console.log(data)
+            }
+        })
+    });
+
+    $(".remove-cart").click (function(){
+        var id = $(this).attr("pid").toString();
+        console.log(id)
+        var eml=this
+        $.ajax({
+            type : "GET",
+            url : "/remove_cart",
+            data : {
+                prod_id :id
+            },
+            success:function(data){
+                console.log(data)
+                $(mythis).closest("cart-item").fadeout()
+            }
+        })
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+{% endblock  %}

@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% block content  %} 
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        
+        }
+        #vid-par{
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            background-blend-mode: overlay;
+        }
+        #my-vid{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            object-fit: cover;
+            pointer-events: none;
+            z-index: -1;
+        }
+        #main {
+            font-family: Arial, sans-serif;
+            display: flex; /* Center the container vertically */
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Make the body full height */
+        }
+        
+        .container {
+            width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: dimgrey;
+            opacity: 0.65;
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: large;
+            /* color: cornsilk; */
+        }
+        
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: large;
+            color: aliceblue;
+            border: 1px solid black;
+            background-color: black;
+            border-radius: 5px;
+        }
+        
+        button {
+            background-color: #0f7413;
+            color: white;
+            font-size: large;
+            width:100% ;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #3e8e41;
+        }
+        #login{
+            color: white;
+            font-size: large;
+            margin-left: 10px;
+
+
+            
+        }
+
+    </style>
+</head>
+<body>
+    <section id="vid-par">
+        <video id="my-vid" autoplay loop muted>
+            {% load static %}
+
+            <source type="video/mp4" src="{% static 'images/closeup_of_natural_weather_phenomenon_6891973.mp4'%}">
+            
+        </video>
+        <div id="main">
+            <div class="container">
+                <h1>Registration Form</h1>
+                <form actiion = "/register" method = "post">
+
+                    {%if messages %}
+                    {%for message in messages%}
+                    <p{%if massage.tags %} class = "alert alert-{{message.tags}} mb-5 " {% endif %} > 
+                        <script>
+                            alert('{{ message }}');
+                        </script>
+                    </p>
+                    {%endfor%}
+                    {%endif%}
+
+                    {% csrf_token %}
+
+                    {% if error %}
+                    <div class = "alert alert-danger" role="alert" >
+                        {{error}}      
+                     </div>
+                     {% endif %}
+
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" value = "{{value.username}}" required>
+        
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value ="{{value.email}}" required>
+        
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+        
+                    <label for="confirm-password">Confirm Password:</label>
+                    <input type="password" id="confirm-password" name="confirm-password" required>
+        
+                    <label for="mobile">Mobile Number:</label>
+                    <input type="tel" id="mobile" name="mobile" value = "{{value.phone}}" required>
+        
+                    <button type="submit">Register</button>
+                    <small>already Registered ?</small>
+                    <a id = "login" href ="/login" >Login</a>
+                </form>
+            </div>
+        </div>
+    </section>
+  
+</body>
+</html>
+
+
+{% endblock  %} 
