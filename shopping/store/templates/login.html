@@ -19,7 +19,9 @@
             font-family: Arial, sans-serif;
             {% comment %} background-color: #f7f7f7; {% endcomment %}
             {% load static %}
-            background-image: url('{% static "images/background.jpg" %}');
+            {% comment %} background-image: url('{% static "images/background.jpg" %}'); {% endcomment %}
+            background-image: url('{% static "images/login_image.png" %}');
+
            
              display: flex;
             justify-content: center;
@@ -28,7 +30,8 @@
         }
         
         .login-container {
-            background-color: grey;
+            background-color: white;
+            opacity:0.8;
             margin-right:80px;
             padding: 20px 30px;
             border-radius: 8px;
