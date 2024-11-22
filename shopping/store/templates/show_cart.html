@@ -37,7 +37,7 @@
                    <td> <input type="number" id="quantity"  value="{{cart.quantity}}" min="1"></td>
 
                     <td> <input type="button"  pid="{{cart.product.id}}" class="plus-cart btn" value="+"> </td>
-                    <td> <input type="button" pid="{{cart.product.id}}" class=" btn btn-danger btn-sm remove-cart" value="Remove"> </td>
+                    <td><input type="button"  pid="{{cart.product.id}}" class=" btn btn-danger btn-sm remove-cart" value="Remove"></td>
                 </tr>
 
             </tbody>
@@ -101,7 +101,7 @@
             type : "GET",
             url : "/plus_cart",
             data : {
-                prod_id :id
+                prod_id : id
             },
             success:function(data){
                 console.log(data)

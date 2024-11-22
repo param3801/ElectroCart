@@ -231,7 +231,7 @@ def remove_cart(request):
         product_id = request.GET['prod_id']
         cart = Cart.objects.get(Q(product=product_id) & Q(phone=phone))
         cart.delete()
-        return JsonResponse()  
+        return redirect('show_cart')  
 
 def checkout(request):
     total_item=0
